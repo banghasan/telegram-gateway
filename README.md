@@ -22,6 +22,7 @@ Variabel lingkungan yang digunakan:
 - `APP_NAME` default `Telegram Gateway`
 - `API_KEY` opsional, jika diisi maka wajib kirim header `X-API-Key`
 - `TELEGRAM_ALLOWED_METHODS` opsional, daftar method Telegram yang diizinkan (dipisah koma). Jika kosong/tidak diisi, semua method diizinkan.
+- `LOG_VERBOSE` default `false`, jika `true` log akan menampilkan payload request
 
 **Endpoint**
 - `GET /` informasi aplikasi dan versi

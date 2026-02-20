@@ -51,22 +51,29 @@ export const createApp = ({ telegram, config }: AppDeps) => {
         return { ok: false, error: "Method is required" };
       }
 
-      try {
+      const verbose = Bun.env.LOG_VERBOSE?.trim().toLowerCase() === "true";
+      if (verbose) {
         logger.request(
           `[${requestId}] -> ${method} payload=${JSON.stringify(body ?? {})}`,
         );
+      } else {
+        logger.request(`[${requestId}] -> ${method}`);
+      }
+      try {
         const result = await telegram.call(method, body ?? {});
         const durationMs = Date.now() - startedAt;
-        logger.info(`[${requestId}] <- ${method} ok durationMs=${durationMs}`);
+        logger.info(
+          `[${requestId}] <- ${method} status=200 durationMs=${durationMs}`,
+        );
         return result;
       } catch (error) {
         const message =
           error instanceof Error ? error.message : "Unknown error";
         const durationMs = Date.now() - startedAt;
-        logger.error(
-          `[${requestId}] <- ${method} error durationMs=${durationMs} message=${message}`,
-        );
         set.status = 502;
+        logger.error(
+          `[${requestId}] <- ${method} status=${set.status} durationMs=${durationMs} message=${message}`,
+        );
         return { ok: false, error: message };
       }
     });
