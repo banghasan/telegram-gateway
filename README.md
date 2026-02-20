@@ -55,6 +55,14 @@ curl -X POST "http://localhost:11000/sendChatAction" \
   }'
 ```
 
+**Contoh Bash Script (`/bash`)**
+- `bash/sendMessage.sh`
+- `bash/sendMessageInlineButtons.sh`
+- `bash/sendLocation.sh`
+- `bash/sendAction.sh`
+- `bash/sendPhoto.sh`
+- `bash/sendVenue.sh`
+
 **Catatan**
 - Gateway akan meneruskan request ke `TELEGRAM_BASE_URL` + `/bot` + `TELEGRAM_BOT_TOKEN` + `/:method`
 - Respon dari Telegram akan diteruskan apa adanya ke client

@@ -7,7 +7,7 @@ PARSE_MODE=${PARSE_MODE:-Markdown}
 BTN_CALLBACK_TEXT=${BTN_CALLBACK_TEXT:-"Callback"}
 BTN_CALLBACK_DATA=${BTN_CALLBACK_DATA:-"cb_hello"}
 
-BTN_URL_TEXT=${BTN_URL_TEXT:-"bangHasan"}
+BTN_URL_TEXT=${BTN_URL_TEXT:-"🎯 bangHasan"}
 BTN_URL=${BTN_URL:-"https://banghasan.com"}
 
 curl -X POST "$URL/sendMessage" \
@@ -20,7 +20,7 @@ curl -X POST "$URL/sendMessage" \
       \"inline_keyboard\": [
         [
           {\"text\": \"$BTN_CALLBACK_TEXT\", \"callback_data\": \"$BTN_CALLBACK_DATA\"},
-          {\"text\": \"$BTN_URL_TEXT\", \"url\": \"$BTN_URL\"}
+          {\"text\": \"$BTN_URL_TEXT\", \"url\": \"$BTN_URL\", \"style\": \"primary\"}
         ]
       ]
     }
