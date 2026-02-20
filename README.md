@@ -16,7 +16,7 @@ Gateway REST API untuk meneruskan request ke Telegram Bot API (atau base URL lok
 Variabel lingkungan yang digunakan:
 - `HOST` default `localhost`
 - `PORT` default `11000`
-- `TELEGRAM_BASE_URL` default `http://localhost:8081`
+- `TELEGRAM_BASE_URL` default `http://localhost:8081` (bisa juga `https://api.telegram.org`)
 - `TELEGRAM_BOT_TOKEN` wajib diisi
 - `TIMEZONE` default `Asia/Jakarta` (format timestamp log)
 - `APP_NAME` default `Telegram Gateway`
@@ -32,6 +32,16 @@ Variabel lingkungan yang digunakan:
 ```bash
 bun install
 bun run dev
+```
+
+**Docker Compose**
+```bash
+docker compose up
+```
+
+Override env saat run:
+```bash
+PORT=12000 TELEGRAM_BASE_URL=https://api.telegram.org docker compose up
 ```
 
 **Script**
