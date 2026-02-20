@@ -45,6 +45,10 @@ Override env saat run:
 PORT=12000 TELEGRAM_BASE_URL=https://api.telegram.org docker compose up
 ```
 
+Catatan:
+- `docker compose` membaca file `.env` untuk interpolasi variabel di `docker-compose.yml`
+- Variabel di shell akan meng-override nilai di `.env`
+
 **Script**
 - `bun run dev` untuk mode watch
 - `bun run start` untuk run biasa
