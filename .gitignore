@@ -1,0 +1,20 @@
+# Bun
+node_modules/
+.bun/
+
+# Environment
+.env
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Build
+/dist/
+/build/

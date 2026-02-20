@@ -1,0 +1,22 @@
+{
+  "name": "telegram-gateway",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "lint": "biome lint src tests",
+    "format": "biome format --write src tests",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "elysia": "^1.0.24",
+    "grammy": "^1.27.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "bun-types": "^1.1.29",
+    "typescript": "^5.4.5"
+  }
+}
