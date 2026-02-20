@@ -21,6 +21,7 @@ describe("telegram gateway", () => {
       port: 11000,
       telegramBaseUrl: "http://localhost:8081",
       telegramBotToken: "token",
+      appName: "Telegram Gateway",
       apiKey: "secret",
     };
 
@@ -56,6 +57,7 @@ describe("telegram gateway", () => {
       port: 11000,
       telegramBaseUrl: "http://localhost:8081",
       telegramBotToken: "token",
+      appName: "Telegram Gateway",
       apiKey: "secret",
     };
 
@@ -82,6 +84,7 @@ describe("telegram gateway", () => {
       port: 11000,
       telegramBaseUrl: "http://localhost:8081",
       telegramBotToken: "token",
+      appName: "Telegram Gateway",
       allowedMethods: new Set(["sendMessage"]),
     };
 

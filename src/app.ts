@@ -10,9 +10,14 @@ export type AppDeps = {
 
 export const createApp = ({ telegram, config }: AppDeps) => {
   return new Elysia()
+    .get("/", () => ({
+      name: config.appName,
+      version: Bun.env.npm_package_version ?? "unknown",
+      timezone: Bun.env.TIMEZONE?.trim() || "Asia/Jakarta",
+    }))
     .get("/health", () => ({
       ok: true,
-      service: "telegram-gateway",
+      service: config.appName,
       version: Bun.env.npm_package_version ?? "unknown",
       timezone: Bun.env.TIMEZONE?.trim() || "Asia/Jakarta",
       allowedMethods: config.allowedMethods

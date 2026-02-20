@@ -19,8 +19,14 @@ Variabel lingkungan yang digunakan:
 - `TELEGRAM_BASE_URL` default `http://localhost:8081`
 - `TELEGRAM_BOT_TOKEN` wajib diisi
 - `TIMEZONE` default `Asia/Jakarta` (format timestamp log)
+- `APP_NAME` default `Telegram Gateway`
 - `API_KEY` opsional, jika diisi maka wajib kirim header `X-API-Key`
 - `TELEGRAM_ALLOWED_METHODS` opsional, daftar method Telegram yang diizinkan (dipisah koma). Jika kosong/tidak diisi, semua method diizinkan.
+
+**Endpoint**
+- `GET /` informasi aplikasi dan versi
+- `GET /health` status sederhana
+- `POST /:method` meneruskan request ke Telegram Bot API
 
 **Menjalankan**
 ```bash
@@ -34,6 +40,13 @@ bun run dev
 - `bun run lint` untuk lint
 - `bun run format` untuk format
 - `bun run test` untuk unit test
+- `bun run version` untuk bump versi (interaktif)
+- `bun run version patch|minor|major` untuk bump versi tanpa prompt
+
+**Penjelasan Bump Versi**
+- `patch` perbaikan kecil/bugfix, tanpa perubahan besar
+- `minor` fitur baru, tetap kompatibel
+- `major` perubahan besar, tidak kompatibel
 
 **Contoh cURL**
 Mengirim `sendMessage`:

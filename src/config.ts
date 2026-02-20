@@ -3,6 +3,7 @@ export type AppConfig = {
   port: number;
   telegramBaseUrl: string;
   telegramBotToken: string;
+  appName: string;
   apiKey?: string;
   allowedMethods?: Set<string>;
 };
@@ -13,6 +14,7 @@ export const loadConfig = (): AppConfig => {
   const telegramBaseUrl =
     Bun.env.TELEGRAM_BASE_URL?.trim() || "http://localhost:8081";
   const telegramBotToken = Bun.env.TELEGRAM_BOT_TOKEN?.trim() || "";
+  const appName = Bun.env.APP_NAME?.trim() || "Telegram Gateway";
   const apiKey = Bun.env.API_KEY?.trim() || "";
   const allowedMethodsRaw = Bun.env.TELEGRAM_ALLOWED_METHODS?.trim() || "";
 
@@ -38,6 +40,7 @@ export const loadConfig = (): AppConfig => {
     port,
     telegramBaseUrl,
     telegramBotToken,
+    appName,
     apiKey: apiKey || undefined,
     allowedMethods,
   };
