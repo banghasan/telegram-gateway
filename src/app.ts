@@ -1,18 +1,44 @@
 import { Elysia } from "elysia";
 import { logger } from "./logger";
+import type { AppConfig } from "./config";
 import type { TelegramClient } from "./telegram";
 
 export type AppDeps = {
   telegram: TelegramClient;
+  config: AppConfig;
 };
 
-export const createApp = ({ telegram }: AppDeps) => {
+export const createApp = ({ telegram, config }: AppDeps) => {
   return new Elysia()
-    .get("/health", () => ({ ok: true }))
-    .post("/:method", async ({ params, body, set }) => {
+    .get("/health", () => ({
+      ok: true,
+      service: "telegram-gateway",
+      version: Bun.env.npm_package_version ?? "unknown",
+      timezone: Bun.env.TIMEZONE?.trim() || "Asia/Jakarta",
+      allowedMethods: config.allowedMethods
+        ? Array.from(config.allowedMethods).sort()
+        : null,
+      authRequired: Boolean(config.apiKey),
+    }))
+    .post("/:method", async ({ params, body, set, headers }) => {
       const { method } = params;
       const requestId = crypto.randomUUID();
       const startedAt = Date.now();
+
+      if (config.apiKey) {
+        const incomingKey = headers["x-api-key"];
+        if (!incomingKey || incomingKey !== config.apiKey) {
+          set.status = 401;
+          logger.warn(`[${requestId}] unauthorized`);
+          return { ok: false, error: "Unauthorized" };
+        }
+      }
+
+      if (config.allowedMethods && !config.allowedMethods.has(method)) {
+        set.status = 403;
+        logger.warn(`[${requestId}] forbidden method=${method}`);
+        return { ok: false, error: "Method is not allowed" };
+      }
 
       if (!method) {
         set.status = 400;
@@ -21,13 +47,16 @@ export const createApp = ({ telegram }: AppDeps) => {
       }
 
       try {
-        logger.request(`[${requestId}] -> ${method} payload=${JSON.stringify(body ?? {})}`);
+        logger.request(
+          `[${requestId}] -> ${method} payload=${JSON.stringify(body ?? {})}`,
+        );
         const result = await telegram.call(method, body ?? {});
         const durationMs = Date.now() - startedAt;
         logger.info(`[${requestId}] <- ${method} ok durationMs=${durationMs}`);
         return result;
       } catch (error) {
-        const message = error instanceof Error ? error.message : "Unknown error";
+        const message =
+          error instanceof Error ? error.message : "Unknown error";
         const durationMs = Date.now() - startedAt;
         logger.error(
           `[${requestId}] <- ${method} error durationMs=${durationMs} message=${message}`,

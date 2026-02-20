@@ -19,6 +19,8 @@ Variabel lingkungan yang digunakan:
 - `TELEGRAM_BASE_URL` default `http://localhost:8081`
 - `TELEGRAM_BOT_TOKEN` wajib diisi
 - `TIMEZONE` default `Asia/Jakarta` (format timestamp log)
+- `API_KEY` opsional, jika diisi maka wajib kirim header `X-API-Key`
+- `TELEGRAM_ALLOWED_METHODS` opsional, daftar method Telegram yang diizinkan (dipisah koma). Jika kosong/tidak diisi, semua method diizinkan.
 
 **Menjalankan**
 ```bash
@@ -45,6 +47,11 @@ curl -X POST "http://localhost:11000/sendMessage" \
   }'
 ```
 
+Jika `API_KEY` diisi, tambahkan header berikut pada semua request:
+```bash
+-H "X-API-Key: <API_KEY_ANDA>"
+```
+
 Mengirim `sendChatAction`:
 ```bash
 curl -X POST "http://localhost:11000/sendChatAction" \
@@ -62,6 +69,11 @@ curl -X POST "http://localhost:11000/sendChatAction" \
 - `bash/sendAction.sh`
 - `bash/sendPhoto.sh`
 - `bash/sendVenue.sh`
+
+Semua script bisa menerima `API_KEY` (opsional), contoh:
+```bash
+API_KEY=secret bash bash/sendMessage.sh
+```
 
 **Catatan**
 - Gateway akan meneruskan request ke `TELEGRAM_BASE_URL` + `/bot` + `TELEGRAM_BOT_TOKEN` + `/:method`

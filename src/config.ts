@@ -3,13 +3,18 @@ export type AppConfig = {
   port: number;
   telegramBaseUrl: string;
   telegramBotToken: string;
+  apiKey?: string;
+  allowedMethods?: Set<string>;
 };
 
 export const loadConfig = (): AppConfig => {
   const host = Bun.env.HOST?.trim() || "localhost";
   const portRaw = Bun.env.PORT?.trim() || "11000";
-  const telegramBaseUrl = Bun.env.TELEGRAM_BASE_URL?.trim() || "http://localhost:8081";
+  const telegramBaseUrl =
+    Bun.env.TELEGRAM_BASE_URL?.trim() || "http://localhost:8081";
   const telegramBotToken = Bun.env.TELEGRAM_BOT_TOKEN?.trim() || "";
+  const apiKey = Bun.env.API_KEY?.trim() || "";
+  const allowedMethodsRaw = Bun.env.TELEGRAM_ALLOWED_METHODS?.trim() || "";
 
   const port = Number(portRaw);
   if (!Number.isFinite(port) || port <= 0) {
@@ -19,10 +24,21 @@ export const loadConfig = (): AppConfig => {
     throw new Error("TELEGRAM_BOT_TOKEN is required");
   }
 
+  const allowedMethods = allowedMethodsRaw
+    ? new Set(
+        allowedMethodsRaw
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean),
+      )
+    : undefined;
+
   return {
     host,
     port,
     telegramBaseUrl,
     telegramBotToken,
+    apiKey: apiKey || undefined,
+    allowedMethods,
   };
 };
