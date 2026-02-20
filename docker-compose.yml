@@ -17,4 +17,4 @@ services:
       APP_NAME: ${APP_NAME:-Telegram Gateway}
     ports:
       - "${PORT:-11000}:${PORT:-11000}"
-    command: ["sh", "-c", "bun install && bun run watch"]
+    command: ["sh", "-c", "bun install && bun run dev"]
