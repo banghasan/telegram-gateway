@@ -20,9 +20,7 @@ export const createApp = ({ telegram, config }: AppDeps) => {
       service: config.appName,
       version: Bun.env.npm_package_version ?? "unknown",
       timezone: Bun.env.TIMEZONE?.trim() || "Asia/Jakarta",
-      allowedMethods: config.allowedMethods
-        ? Array.from(config.allowedMethods).sort()
-        : null,
+      allowedMethods: config.allowedMethods ? Array.from(config.allowedMethods).sort() : null,
       authRequired: Boolean(config.apiKey),
     }))
     .post("/:method", async ({ params, body, set, headers }) => {
@@ -53,22 +51,17 @@ export const createApp = ({ telegram, config }: AppDeps) => {
 
       const verbose = Bun.env.LOG_VERBOSE?.trim().toLowerCase() === "true";
       if (verbose) {
-        logger.request(
-          `[${requestId}] -> ${method} payload=${JSON.stringify(body ?? {})}`,
-        );
+        logger.request(`[${requestId}] -> ${method} payload=${JSON.stringify(body ?? {})}`);
       } else {
         logger.request(`[${requestId}] -> ${method}`);
       }
       try {
         const result = await telegram.call(method, body ?? {});
         const durationMs = Date.now() - startedAt;
-        logger.info(
-          `[${requestId}] <- ${method} status=200 durationMs=${durationMs}`,
-        );
+        logger.info(`[${requestId}] <- ${method} status=200 durationMs=${durationMs}`);
         return result;
       } catch (error) {
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = error instanceof Error ? error.message : "Unknown error";
         const durationMs = Date.now() - startedAt;
         set.status = 502;
         logger.error(

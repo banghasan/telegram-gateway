@@ -4,10 +4,7 @@ import { logger } from "./logger";
 import { createTelegramClient } from "./telegram";
 
 const config = loadConfig();
-const telegram = createTelegramClient(
-  config.telegramBotToken,
-  config.telegramBaseUrl,
-);
+const telegram = createTelegramClient(config.telegramBotToken, config.telegramBaseUrl);
 
 const app = createApp({ telegram, config });
 

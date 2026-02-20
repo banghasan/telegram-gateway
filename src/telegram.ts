@@ -18,10 +18,7 @@ const safeStringify = (value: unknown) => {
   }
 };
 
-export const createTelegramClient = (
-  token: string,
-  apiRoot: string,
-): TelegramClient => {
+export const createTelegramClient = (token: string, apiRoot: string): TelegramClient => {
   const normalizedRoot = normalizeApiRoot(apiRoot);
   const api = new Api(token, { apiRoot: normalizedRoot });
   const apiAny = api as unknown as {
@@ -41,9 +38,7 @@ export const createTelegramClient = (
       const url = `${normalizedRoot}/bot${token}/${method}`;
       const redactedPath = `/${method}`;
       const body = payload ?? {};
-      logger.request(
-        `[telegram] -> POST ${redactedPath} body=${safeStringify(body)}`,
-      );
+      logger.request(`[telegram] -> POST ${redactedPath} body=${safeStringify(body)}`);
 
       const res = await fetch(url, {
         method: "POST",

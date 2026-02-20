@@ -5,15 +5,14 @@ services:
     volumes:
       - .:/app
     environment:
-      HOST: ${HOST:-localhost}
-      PORT: ${PORT:-11000}
-      TELEGRAM_BASE_URL: ${TELEGRAM_BASE_URL:-http://localhost:8081}
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
-      TIMEZONE: ${TIMEZONE:-Asia/Jakarta}
+      HOST: 0.0.0.0
+      PORT: 11000
+      TELEGRAM_BASE_URL: http://api.telegram.org
+      TELEGRAM_BOT_TOKEN: TELEGRAM_BOT_TOKEN
+      TIMEZONE: Asia/Jakarta
       API_KEY: ${API_KEY:-}
-      TELEGRAM_ALLOWED_METHODS: ${TELEGRAM_ALLOWED_METHODS:-}
-      APP_NAME: ${APP_NAME:-Telegram Gateway}
-      LOG_VERBOSE: ${LOG_VERBOSE:-false}
+      # TELEGRAM_ALLOWED_METHODS: sendMessage,sendLocation
+      LOG_VERBOSE: false
     ports:
-      - "${PORT:-11000}:${PORT:-11000}"
+      - 127.0.0.1:11000:11000
     command: ["sh", "-c", "bun install && bun run dev"]

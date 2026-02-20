@@ -11,8 +11,7 @@ export type AppConfig = {
 export const loadConfig = (): AppConfig => {
   const host = Bun.env.HOST?.trim() || "localhost";
   const portRaw = Bun.env.PORT?.trim() || "11000";
-  const telegramBaseUrl =
-    Bun.env.TELEGRAM_BASE_URL?.trim() || "http://localhost:8081";
+  const telegramBaseUrl = Bun.env.TELEGRAM_BASE_URL?.trim() || "http://localhost:8081";
   const telegramBotToken = Bun.env.TELEGRAM_BOT_TOKEN?.trim() || "";
   const appName = Bun.env.APP_NAME?.trim() || "Telegram Gateway";
   const apiKey = Bun.env.API_KEY?.trim() || "";
